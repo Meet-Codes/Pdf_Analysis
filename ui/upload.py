@@ -3,7 +3,7 @@ Upload UI: Professional drag-and-drop file ingestion interface.
 Section 6: Clean pipeline status checkmarks without technical noise.
 """
 
-from typing import List, Optional
+from typing import List, Any
 import streamlit as st
 
 

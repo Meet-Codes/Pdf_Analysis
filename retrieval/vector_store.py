@@ -1,6 +1,7 @@
 """
 Vector Store: Local vector index with strict metadata filtering.
 Ensures document isolation so Customer A's data is never retrieved for Customer B.
+Uses genuine semantic cosine similarity.
 """
 
 from typing import List, Dict, Any, Optional
@@ -23,16 +24,21 @@ class LocalVectorStore:
         self.chunks: List[DocumentChunk] = []
 
     def add_chunks(self, texts: List[str], metadatas: List[Dict[str, Any]]) -> None:
-        """Embeds and indexes document chunks."""
+        """Embeds and indexes document chunks with genuine semantic embeddings."""
         if not texts:
             return
 
         embeddings = embedding_engine.embed_documents(texts)
+        provider_info = embedding_engine.get_provider_info()
+
         for text, meta, emb in zip(texts, metadatas, embeddings):
-            chunk = DocumentChunk(text=text, metadata=meta, vector=emb)
+            chunk_meta = dict(meta)
+            chunk_meta["embedding_provider"] = provider_info["provider"]
+            chunk_meta["embedding_dim"] = len(emb)
+            chunk = DocumentChunk(text=text, metadata=chunk_meta, vector=emb)
             self.chunks.append(chunk)
 
-        logger.info(f"Indexed {len(texts)} chunks. Total in store: {len(self.chunks)}")
+        logger.info(f"Indexed {len(texts)} chunks into VectorStore ({provider_info['provider']}, dim={len(embeddings[0]) if embeddings else 0}). Total: {len(self.chunks)}")
 
     def similarity_search(
         self,
@@ -42,11 +48,12 @@ class LocalVectorStore:
     ) -> List[Dict[str, Any]]:
         """
         Retrieves top-k relevant chunks matching query and passing metadata filter.
+        Guarantees strict semantic vector scoring.
         """
         if not self.chunks:
             return []
 
-        # 1. Apply strict metadata filtering first
+        # 1. Apply strict metadata filtering first (Document Isolation)
         filtered_chunks = self.chunks
         if filter_metadata:
             filtered_chunks = [
@@ -63,6 +70,21 @@ class LocalVectorStore:
         if q_norm > 0:
             query_vec = query_vec / q_norm
 
+        # Check for dimension alignment
+        target_dim = len(query_vec)
+        first_chunk_dim = len(filtered_chunks[0].vector) if filtered_chunks[0].vector else 0
+
+        if first_chunk_dim != target_dim and first_chunk_dim > 0:
+            # Dimension mismatch (e.g. index was created with different provider than current query)
+            logger.warning(
+                f"Dimension alignment needed: query dim={target_dim}, indexed dim={first_chunk_dim}. "
+                "Re-embedding document chunks with current semantic provider for precision."
+            )
+            chunk_texts = [c.text for c in filtered_chunks]
+            new_embs = embedding_engine.embed_documents(chunk_texts)
+            for c, new_emb in zip(filtered_chunks, new_embs):
+                c.vector = new_emb
+
         # 3. Compute cosine similarities
         scored_chunks = []
         for c in filtered_chunks:
@@ -71,15 +93,11 @@ class LocalVectorStore:
             if c_norm > 0:
                 c_vec = c_vec / c_norm
 
-            if query_vec.shape != c_vec.shape:
-                # Dimension mismatch safeguard (e.g. if chunks or query came from different fallback states)
-                q_words = set(query.lower().split())
-                c_words = set(c.text.lower().split())
-                intersection = len(q_words & c_words)
-                union = len(q_words | c_words) or 1
-                similarity = float(intersection / union)
-            else:
+            if query_vec.shape == c_vec.shape:
                 similarity = float(np.dot(query_vec, c_vec))
+            else:
+                similarity = 0.0
+
             scored_chunks.append((similarity, c))
 
         # Sort descending
@@ -90,7 +108,8 @@ class LocalVectorStore:
             results.append({
                 "text": chunk.text,
                 "metadata": chunk.metadata,
-                "score": score,
+                "score": float(round(score, 4)),
+                "engine": "vector",
             })
 
         return results

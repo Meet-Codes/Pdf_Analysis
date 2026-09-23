@@ -4,13 +4,64 @@ Sections 28, 51, 52, 54, 55: Domain-tailored cards, clean fields, export actions
 """
 
 import json
-from typing import Optional
+from typing import Optional, Any
 import streamlit as st
 import pandas as pd
 from schemas.base import CanonicalDocument
-from ui.cards import render_section_card
-from ui.summary import render_summary_card
 from ui.chat import render_document_chat
+
+
+def clean_canonical_data(data: Any) -> Any:
+    """
+    Ensure the canonical data is JSON-serializable and contains only primitive values:
+    string, number, boolean, null, arrays, and objects.
+
+    Do NOT expose internal candidate objects such as FieldCandidate or ResolvedFieldCandidate.
+    If an internal candidate object exists, convert/use its final `.value` before displaying it.
+    Never use `default=str` to serialize internal candidate objects.
+    """
+    if data is None:
+        return None
+
+    # Handle internal candidate and evidence objects (FieldCandidate, ResolvedFieldCandidate, SourceEvidence, Enum)
+    if hasattr(data, "value") and (
+        hasattr(data, "raw_evidence")
+        or hasattr(data, "method")
+        or "candidate" in type(data).__name__.lower()
+        or "evidence" in type(data).__name__.lower()
+    ):
+        return clean_canonical_data(data.value)
+
+    # Handle Pydantic models (v2 model_dump or v1 dict)
+    if hasattr(data, "model_dump") and callable(getattr(data, "model_dump")):
+        return clean_canonical_data(data.model_dump())
+    if hasattr(data, "dict") and callable(getattr(data, "dict")):
+        return clean_canonical_data(data.dict())
+
+    # Handle generic objects with .value attribute (e.g. Enums)
+    if hasattr(data, "value"):
+        return clean_canonical_data(data.value)
+
+    if isinstance(data, dict):
+        clean_dict = {}
+        for k, v in data.items():
+            k_str = str(k)
+            # Hide internal / private / candidate metadata keys
+            if k_str.startswith("_") or "candidate" in k_str.lower():
+                continue
+            clean_dict[k_str] = clean_canonical_data(v)
+        return clean_dict
+
+    if isinstance(data, (list, tuple, set)):
+        return [clean_canonical_data(item) for item in data]
+
+    if isinstance(data, (str, int, float, bool)):
+        return data
+
+    if hasattr(data, "isoformat"):
+        return data.isoformat()
+
+    return str(data)
 
 
 def render_document_view(doc: CanonicalDocument):
@@ -42,27 +93,17 @@ def render_document_view(doc: CanonicalDocument):
         with st.container():
             st.warning("⚠️ Attention: " + "; ".join(doc.validation_warnings))
 
+    # Clean canonical data object
+    clean_data = clean_canonical_data(doc.structured_data)
+
     # Tab navigation for clean organization
     tab_overview, tab_chat, tab_export = st.tabs(["📋 Overview & Intelligence", "💬 Ask Document", "📥 Export Data"])
 
     with tab_overview:
-        # Executive Summary
-        if doc.summary:
-            with st.container():
-                st.markdown('<div class="doc-card">', unsafe_allow_html=True)
-                render_summary_card(doc.summary)
-                st.markdown('</div>', unsafe_allow_html=True)
-
-        # Dynamic Section Cards (Customer, Policy, Vehicle, Financials, Dates, etc.)
-        for section in doc.sections:
-            st.markdown('<div class="doc-card">', unsafe_allow_html=True)
-            render_section_card(section, columns=2)
-            st.markdown('</div>', unsafe_allow_html=True)
-
-        # Clean Structured Data View (Section 54)
-        with st.expander("🔍 View Normalized Canonical Data", expanded=False):
-            st.caption("Clean canonical data representation used by enterprise systems:")
-            st.json(doc.structured_data)
+        # Clean Normalized Canonical Data View
+        with st.expander("View Normalized Canonical Data", expanded=False):
+            st.caption("Clean canonical data representation used by enterprise systems")
+            st.json(clean_data)
 
     with tab_chat:
         render_document_chat(doc)
@@ -74,7 +115,7 @@ def render_document_view(doc: CanonicalDocument):
         export_col1, export_col2 = st.columns(2)
 
         # 1. JSON Export
-        json_data = json.dumps(doc.structured_data, indent=2)
+        json_data = json.dumps(clean_data, indent=2)
         clean_name = doc.file_name.rsplit(".", 1)[0]
         export_col1.download_button(
             label="📄 Download JSON",
@@ -86,7 +127,7 @@ def render_document_view(doc: CanonicalDocument):
 
         # 2. CSV Export
         flat_records = []
-        for k, v in doc.structured_data.items():
+        for k, v in clean_data.items():
             if not isinstance(v, (dict, list)):
                 flat_records.append({"Field": k, "Normalized Value": v})
         csv_df = pd.DataFrame(flat_records)

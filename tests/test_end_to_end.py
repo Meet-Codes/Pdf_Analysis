@@ -25,7 +25,7 @@ def test_end_to_end_motor_insurance():
 
     # 2. Verify normalized values
     data = canonical.structured_data
-    assert data.get("insured_name") == "Mr Meet Korat"
+    assert (data.get("customer_name") or data.get("insured_name")) == "Mr Meet Korat"
     assert data.get("policy_number") == "P0023200023/4115/103739"
     assert data.get("registration_number") == "GJ03MG6586"
     assert data.get("vehicle_make") == "TATA"

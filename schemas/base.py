@@ -3,7 +3,7 @@ Base schemas, enums, and canonical document representations.
 """
 
 from enum import Enum
-from typing import Dict, List, Optional, Any, Union
+from typing import Dict, List, Optional, Any, Union, Tuple
 from pydantic import BaseModel, Field
 
 
@@ -44,9 +44,25 @@ class PageType(str, Enum):
 class SourceEvidence(BaseModel):
     field: str
     value: Any
+    exact_label: Optional[str] = None
     page: int = 1
+    bbox: Optional[Tuple[float, float, float, float]] = None
     source: str = "text"  # text, ocr, table, form
     evidence: str = ""
+    raw_evidence: str = ""
+    method: str = "deterministic"
+    confidence: float = 1.0
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "value": self.value,
+            "exact_label": self.exact_label,
+            "page": self.page,
+            "bbox": self.bbox,
+            "evidence": self.evidence or self.raw_evidence,
+            "method": self.method,
+            "confidence": self.confidence,
+        }
 
 
 class PageInspectionResult(BaseModel):
@@ -104,8 +120,14 @@ class CanonicalDocument(BaseModel):
     # Field-level source evidence (hidden in normal UI, visible in Debug Mode)
     evidence: Dict[str, SourceEvidence] = Field(default_factory=dict)
     page_texts: Dict[int, str] = Field(default_factory=dict)
+    tables: List[Dict[str, Any]] = Field(default_factory=list)
     # Validation results
     is_valid: bool = True
     validation_warnings: List[str] = Field(default_factory=list)
     validation_errors: List[str] = Field(default_factory=list)
     inspection: Optional[DocumentInspectionResult] = None
+
+    @property
+    def evidence_map(self) -> Dict[str, SourceEvidence]:
+        """Convenience property alias for evidence dictionary."""
+        return self.evidence

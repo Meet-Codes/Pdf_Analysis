@@ -29,7 +29,12 @@ def get_logger(name: str = "document_intelligence") -> logging.Logger:
             datefmt="%Y-%m-%d %H:%M:%S",
         )
 
-        # Console Handler
+        # Console Handler with safe UTF-8 encoding
+        if hasattr(sys.stdout, "reconfigure"):
+            try:
+                sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+            except Exception:
+                pass
         console_handler = logging.StreamHandler(sys.stdout)
         console_handler.setFormatter(formatter)
         console_handler.setLevel(log_level)

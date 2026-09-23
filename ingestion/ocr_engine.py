@@ -19,6 +19,21 @@ if settings.TESSERACT_CMD:
     pytesseract.pytesseract.tesseract_cmd = settings.TESSERACT_CMD
 
 
+def get_verified_tesseract_cmd() -> Optional[str]:
+    """Dynamically verifies or discovers Tesseract binary across environments."""
+    if settings.TESSERACT_CMD and Path(settings.TESSERACT_CMD).is_file():
+        return settings.TESSERACT_CMD
+
+    from config import resolve_tesseract_path
+    resolved = resolve_tesseract_path(None)
+    if resolved and Path(resolved).is_file():
+        settings.TESSERACT_CMD = resolved
+        pytesseract.pytesseract.tesseract_cmd = resolved
+        return resolved
+
+    return None
+
+
 def preprocess_image_for_ocr(image: Image.Image) -> Image.Image:
     """
     Apply deterministic image enhancements for optimal OCR accuracy:
@@ -69,8 +84,12 @@ def ocr_page(
         "char_count": 0,
     }
 
-    if not settings.TESSERACT_CMD or not Path(settings.TESSERACT_CMD).exists():
-        result["error"] = "Tesseract OCR engine is not configured or executable not found."
+    tess_cmd = get_verified_tesseract_cmd()
+    if not tess_cmd:
+        result["error"] = (
+            f"Tesseract OCR executable not found on system PATH or candidate paths "
+            f"(configured: {settings.TESSERACT_CMD}). OCR is unavailable for page {page_number}."
+        )
         logger.warning(result["error"])
         return result
 

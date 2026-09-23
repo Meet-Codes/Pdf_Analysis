@@ -11,19 +11,32 @@ class MotorInsuranceSchema(BaseModel):
     subtype: MotorSubtype = MotorSubtype.CAR
     policy_number: Optional[str] = None
     policy_type: Optional[str] = None
+    insurance_type: Optional[str] = None
     insurer: Optional[str] = None
+    company_name: Optional[str] = None
     insured_name: Optional[str] = None
+    customer_name: Optional[str] = None
     insured_address: Optional[str] = None
     mobile: Optional[str] = None
+    customer_mobile: Optional[str] = None
     email: Optional[str] = None
+
+    # Agent / Intermediary details
+    agent_name: Optional[str] = None
+    agent_code: Optional[str] = None
 
     # Vehicle details
     registration_number: Optional[str] = None
+    vehicle_registration_number: Optional[str] = None
     rto: Optional[str] = None
     vehicle_make: Optional[str] = None
+    make: Optional[str] = None
     vehicle_model: Optional[str] = None
+    model: Optional[str] = None
     vehicle_type: Optional[str] = None
+    class_of_vehicle: Optional[str] = None
     manufacturing_year: Optional[str] = None
+    year_of_manufacture: Optional[str] = None
     registration_date: Optional[str] = None
     engine_number: Optional[str] = None
     chassis_number: Optional[str] = None
@@ -33,13 +46,22 @@ class MotorInsuranceSchema(BaseModel):
 
     # Financial & Cover
     idv: Optional[float] = None
+    total_idv: Optional[float] = None
+    cng_idv: Optional[float] = None
     own_damage_premium: Optional[float] = None
+    od_premium: Optional[float] = None
     third_party_premium: Optional[float] = None
+    tp_premium: Optional[float] = None
+    net_premium: Optional[float] = None
+    addon_premium: Optional[float] = None
     ncb_percentage: Optional[str] = None
+    ncb: Optional[str] = None
     gst: Optional[float] = None
+    gst_amount: Optional[float] = None
     total_premium: Optional[float] = None
 
     # Dates
+    policy_booking_date: Optional[str] = None
     policy_start_date: Optional[str] = None
     policy_end_date: Optional[str] = None
 

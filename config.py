@@ -29,12 +29,16 @@ def resolve_tesseract_path(configured_path: Optional[str]) -> Optional[str]:
     if which_path:
         return which_path
 
-    # Common Windows installation locations
+    # Common Windows, Linux and MacOS installation locations
     candidate_paths = [
         r"C:\Program Files\Tesseract-OCR\tesseract.exe",
         r"C:\Program Files (x86)\Tesseract-OCR\tesseract.exe",
         os.path.expandvars(r"%LOCALAPPDATA%\Programs\Tesseract-OCR\tesseract.exe"),
         os.path.expandvars(r"%USERPROFILE%\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"),
+        "/usr/bin/tesseract",
+        "/usr/local/bin/tesseract",
+        "/usr/bin/tesseract-ocr",
+        "/opt/homebrew/bin/tesseract",
     ]
 
     for candidate in candidate_paths:
@@ -49,7 +53,13 @@ class Settings:
     OLLAMA_BASE_URL: str = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434")
     OLLAMA_MODEL: str = os.getenv("OLLAMA_MODEL", "qwen3:4b")
     EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "qwen3-embedding:0.6b")
-    OLLAMA_TIMEOUT: int = int(os.getenv("OLLAMA_TIMEOUT", "60"))
+    LOCAL_EMBEDDING_FALLBACK: str = os.getenv("LOCAL_EMBEDDING_FALLBACK", "all-MiniLM-L6-v2")
+    RERANKER_MODEL: str = os.getenv("RERANKER_MODEL", "cross-encoder/ms-marco-MiniLM-L-6-v2")
+    OLLAMA_TIMEOUT: int = int(os.getenv("OLLAMA_TIMEOUT", "30"))
+
+    # RAG candidate pool sizes
+    RETRIEVAL_CANDIDATE_POOL: int = int(os.getenv("RETRIEVAL_CANDIDATE_POOL", "18"))
+    RETRIEVAL_FINAL_K: int = int(os.getenv("RETRIEVAL_FINAL_K", "4"))
 
     # OCR Settings
     TESSERACT_CMD: Optional[str] = resolve_tesseract_path(os.getenv("TESSERACT_CMD", r"C:\Program Files\Tesseract-OCR\tesseract.exe"))

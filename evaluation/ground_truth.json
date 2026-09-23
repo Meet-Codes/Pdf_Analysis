@@ -1,0 +1,403 @@
+{
+  "doc_01_motor_cv.pdf": {
+    "file_name": "doc_01_motor_cv.pdf",
+    "doc_type": "MOTOR_INSURANCE",
+    "fields": {
+      "policy_number": "REL-CV-2024-984512",
+      "customer_name": "MR. VIKRAM SINGH",
+      "insurance_company": "Reliance General Insurance Company Limited",
+      "policy_start_date": "15/01/2024",
+      "policy_end_date": "14/01/2025",
+      "policy_duration": "1 Year",
+      "registration_number": "RJ 14 GA 8899",
+      "vehicle_make": "TATA",
+      "vehicle_model": "407 TRUCK",
+      "engine_number": "ENG77665544",
+      "chassis_number": "CHA99887766",
+      "net_premium": "16,500.00",
+      "tax": "2,970.00",
+      "total_amount": "19,470.00"
+    },
+    "unanswerable_fields": [
+      "customer_pan",
+      "loan_account_number"
+    ]
+  },
+  "doc_02_car_table.pdf": {
+    "file_name": "doc_02_car_table.pdf",
+    "doc_type": "MOTOR_INSURANCE",
+    "fields": {
+      "policy_number": "TATA/CAR/88442211/00",
+      "customer_name": "Mrs. Priya Sharma",
+      "insurance_company": "TATA AIG GENERAL INSURANCE COMPANY LIMITED",
+      "policy_start_date": "01/05/2024",
+      "policy_end_date": "30/04/2025",
+      "policy_duration": "1 Year",
+      "registration_number": "MH 02 CD 4567",
+      "vehicle_make": "MARUTI",
+      "vehicle_model": "MARUTI SUZUKI SWIFT VXI",
+      "idv": "4,80,000.00",
+      "net_premium": "9,969.00",
+      "tax": "1,794.42",
+      "total_amount": "11,763.42"
+    },
+    "unanswerable_fields": [
+      "engine_number",
+      "customer_pan"
+    ]
+  },
+  "doc_03_two_wheeler_dates.pdf": {
+    "file_name": "doc_03_two_wheeler_dates.pdf",
+    "doc_type": "MOTOR_INSURANCE",
+    "fields": {
+      "policy_number": "OG-24-1102-1802-00045678",
+      "customer_name": "Mr. Rahul Dave",
+      "insurance_company": "BAJAJ ALLIANZ GENERAL INSURANCE CO. LTD.",
+      "policy_start_date": "15/02/2024",
+      "policy_end_date": "14/02/2025",
+      "policy_duration": "1 Year",
+      "registration_number": "KA 05 HJ 3321",
+      "vehicle_make": "HONDA",
+      "vehicle_model": "HONDA ACTIVA 6G",
+      "net_premium": "1,850.00",
+      "tax": "333.00",
+      "total_amount": "2,183.00"
+    },
+    "unanswerable_fields": [
+      "nominee_name",
+      "customer_pan"
+    ]
+  },
+  "doc_04_health_floater.pdf": {
+    "file_name": "doc_04_health_floater.pdf",
+    "doc_type": "HEALTH_INSURANCE",
+    "fields": {
+      "policy_number": "HDFC-HEALTH-55443322",
+      "customer_name": "Mr. Amit Patel",
+      "insurance_company": "HDFC ERGO General Insurance Company Limited",
+      "policy_start_date": "10/06/2024",
+      "policy_end_date": "09/06/2025",
+      "policy_duration": "1 Year",
+      "sum_insured": "10,00,000.00",
+      "net_premium": "24,000.00",
+      "tax": "4,320.00",
+      "total_amount": "28,320.00"
+    },
+    "unanswerable_fields": [
+      "registration_number",
+      "engine_number"
+    ]
+  },
+  "doc_05_health_individual.pdf": {
+    "file_name": "doc_05_health_individual.pdf",
+    "doc_type": "HEALTH_INSURANCE",
+    "fields": {
+      "policy_number": "P/161118/01/2024/007891",
+      "customer_name": "Dr. Suresh Menon",
+      "insurance_company": "STAR HEALTH AND ALLIED INSURANCE CO. LTD.",
+      "policy_start_date": "01/03/2024",
+      "policy_end_date": "28/02/2025",
+      "policy_duration": "1 Year",
+      "sum_insured": "7,50,000.00",
+      "net_premium": "18,200.00",
+      "tax": "3,276.00",
+      "total_amount": "21,476.00"
+    },
+    "unanswerable_fields": [
+      "chassis_number",
+      "registration_number"
+    ]
+  },
+  "doc_06_fire_property.pdf": {
+    "file_name": "doc_06_fire_property.pdf",
+    "doc_type": "PROPERTY_INSURANCE",
+    "fields": {
+      "policy_number": "FIRE/ICICI/2024/990011",
+      "customer_name": "M/s Shreeji Textiles Ltd",
+      "insurance_company": "ICICI LOMBARD GENERAL INSURANCE COMPANY LTD.",
+      "policy_start_date": "01/04/2024",
+      "policy_end_date": "31/03/2025",
+      "policy_duration": "1 Year",
+      "sum_insured": "4,30,00,000.00",
+      "net_premium": "65,000.00",
+      "tax": "11,700.00",
+      "total_amount": "76,700.00"
+    },
+    "unanswerable_fields": [
+      "registration_number",
+      "engine_number"
+    ]
+  },
+  "doc_07_workmen.pdf": {
+    "file_name": "doc_07_workmen.pdf",
+    "doc_type": "WORKMEN_COMPENSATION",
+    "fields": {
+      "policy_number": "12010028240100003412",
+      "customer_name": "Apex Infra Projects Private Limited",
+      "insurance_company": "THE NEW INDIA ASSURANCE CO. LTD.",
+      "policy_start_date": "15/07/2024",
+      "policy_end_date": "14/07/2025",
+      "policy_duration": "1 Year",
+      "net_premium": "38,500.00",
+      "tax": "6,930.00",
+      "total_amount": "45,430.00"
+    },
+    "unanswerable_fields": [
+      "registration_number",
+      "vehicle_model"
+    ]
+  },
+  "PANCARD_99881122.pdf": {
+    "file_name": "PANCARD_99881122.pdf",
+    "doc_type": "ELECTRICITY_BILL",
+    "fields": {
+      "policy_number": "88776655441",
+      "consumer_number": "88776655441",
+      "customer_name": "MR. RAMESH BHAI PATEL",
+      "insurance_company": "PASCHIM GUJARAT VIJ COMPANY LIMITED",
+      "electricity_provider": "PGVCL",
+      "policy_start_date": "05/08/2024",
+      "policy_end_date": "20/08/2024",
+      "meter_number": "MTR445566",
+      "total_amount": "3,588.00"
+    },
+    "unanswerable_fields": [
+      "customer_pan",
+      "registration_number"
+    ]
+  },
+  "doc_09_electricity_adani.pdf": {
+    "file_name": "doc_09_electricity_adani.pdf",
+    "doc_type": "ELECTRICITY_BILL",
+    "fields": {
+      "policy_number": "100982341",
+      "consumer_number": "100982341",
+      "customer_name": "Mrs. Sunita Kulkarni",
+      "insurance_company": "ADANI ELECTRICITY MUMBAI LIMITED",
+      "electricity_provider": "ADANI ELECTRICITY",
+      "policy_start_date": "12/09/2024",
+      "policy_end_date": "27/09/2024",
+      "meter_number": "ADM778899",
+      "total_amount": "5,550.00"
+    },
+    "unanswerable_fields": [
+      "pan_number",
+      "chassis_number"
+    ]
+  },
+  "doc_10_multipage_motor.pdf": {
+    "file_name": "doc_10_multipage_motor.pdf",
+    "doc_type": "MOTOR_INSURANCE",
+    "fields": {
+      "policy_number": "RS-CV-9988112233",
+      "customer_name": "Mr. Harish Chandra Verma",
+      "insurance_company": "ROYAL SUNDARAM GENERAL INSURANCE CO. LIMITED",
+      "policy_start_date": "01/10/2024",
+      "policy_end_date": "30/09/2025",
+      "policy_duration": "1 Year",
+      "registration_number": "UP 32 AZ 9988",
+      "vehicle_make": "EICHER",
+      "vehicle_model": "EICHER PRO 2049",
+      "engine_number": "E483CD998877",
+      "chassis_number": "MC211234567890",
+      "net_premium": "28,146.00",
+      "tax": "5,066.28",
+      "total_amount": "33,212.28"
+    },
+    "unanswerable_fields": [
+      "customer_pan"
+    ]
+  },
+  "doc_11_multicol_motor.pdf": {
+    "file_name": "doc_11_multicol_motor.pdf",
+    "doc_type": "MOTOR_INSURANCE",
+    "fields": {
+      "policy_number": "CHOLA-MOT-2024-551122",
+      "customer_name": "Mr. Deepak Singhania",
+      "insurance_company": "CHOLAMANDALAM MS GENERAL INSURANCE CO. LTD.",
+      "policy_start_date": "10/11/2024",
+      "policy_end_date": "09/11/2025",
+      "policy_duration": "1 Year",
+      "registration_number": "UP 78 BD 1122",
+      "vehicle_make": "HYUNDAI",
+      "vehicle_model": "CRETA SX DIESEL",
+      "engine_number": "D4FA123456",
+      "chassis_number": "MALCA12345678",
+      "total_amount": "22,890.00"
+    },
+    "unanswerable_fields": [
+      "customer_pan"
+    ]
+  },
+  "doc_12_health_members.pdf": {
+    "file_name": "doc_12_health_members.pdf",
+    "doc_type": "HEALTH_INSURANCE",
+    "fields": {
+      "policy_number": "CARE-ADV-11223344",
+      "customer_name": "Mr. Rajiv Nambiar",
+      "insurance_company": "CARE HEALTH INSURANCE LIMITED",
+      "policy_start_date": "01/12/2024",
+      "policy_end_date": "30/11/2025",
+      "policy_duration": "1 Year",
+      "sum_insured": "25,00,000.00",
+      "total_amount": "34,500.00"
+    },
+    "unanswerable_fields": [
+      "registration_number"
+    ]
+  },
+  "doc_13_scanned_ocr.pdf": {
+    "file_name": "doc_13_scanned_ocr.pdf",
+    "doc_type": "MOTOR_INSURANCE",
+    "fields": {
+      "policy_number": "0401003124P109887766",
+      "customer_name": "MR NARESH JOSHI",
+      "insurance_company": "UNITED INDIA INSURANCE COMPANY LIMITED",
+      "policy_start_date": "01/01/2024",
+      "policy_end_date": "31/12/2024",
+      "policy_duration": "1 Year",
+      "registration_number": "GJ 01 AB 7788",
+      "vehicle_make": "MARUTI",
+      "vehicle_model": "MARUTI SUZUKI WAGON R",
+      "net_premium": "8,400.00",
+      "tax": "1,512.00",
+      "total_amount": "9,912.00"
+    },
+    "unanswerable_fields": [
+      "customer_pan"
+    ]
+  },
+  "doc_14_conflicting_dates.pdf": {
+    "file_name": "doc_14_conflicting_dates.pdf",
+    "doc_type": "MOTOR_INSURANCE",
+    "fields": {
+      "policy_number": "211500/31/2024/7766",
+      "customer_name": "Mr. Sandeep Saxena",
+      "insurance_company": "ORIENTAL INSURANCE COMPANY LIMITED",
+      "policy_start_date": "10/07/2024",
+      "policy_end_date": "09/07/2025",
+      "policy_duration": "1 Year",
+      "registration_number": "DL 03 SE 4455",
+      "vehicle_make": "TVS",
+      "vehicle_model": "TVS JUPITER 125",
+      "total_amount": "2,450.00"
+    },
+    "unanswerable_fields": [
+      "customer_pan"
+    ]
+  },
+  "doc_15_conflicting_amounts.pdf": {
+    "file_name": "doc_15_conflicting_amounts.pdf",
+    "doc_type": "MOTOR_INSURANCE",
+    "fields": {
+      "policy_number": "SBI-CAR-2024-332211",
+      "customer_name": "Mr. Gaurav Khanna",
+      "insurance_company": "SBI GENERAL INSURANCE COMPANY LIMITED",
+      "policy_start_date": "20/08/2024",
+      "policy_end_date": "19/08/2025",
+      "policy_duration": "1 Year",
+      "registration_number": "HR 26 DK 8877",
+      "idv": "6,50,000.00",
+      "net_premium": "14,616.00",
+      "tax": "2,630.88",
+      "total_amount": "17,246.88"
+    },
+    "unanswerable_fields": [
+      "chassis_number",
+      "customer_pan"
+    ]
+  },
+  "doc_16_multiple_orgs.pdf": {
+    "file_name": "doc_16_multiple_orgs.pdf",
+    "doc_type": "MOTOR_INSURANCE",
+    "fields": {
+      "policy_number": "KOTAK-GEN-99008811",
+      "customer_name": "Ms. Shreya Sen",
+      "insurance_company": "KOTAK MAHINDRA GENERAL INSURANCE CO. LTD.",
+      "policy_start_date": "15/09/2024",
+      "policy_end_date": "14/09/2025",
+      "policy_duration": "1 Year",
+      "registration_number": "WB 02 AX 5544",
+      "vehicle_make": "HYUNDAI",
+      "vehicle_model": "HYUNDAI I20 ASTA",
+      "total_amount": "16,350.00"
+    },
+    "unanswerable_fields": [
+      "customer_pan"
+    ]
+  },
+  "doc_17_name_with_slash.pdf": {
+    "file_name": "doc_17_name_with_slash.pdf",
+    "doc_type": "HEALTH_INSURANCE",
+    "fields": {
+      "policy_number": "NB-HLTH-2024-771122",
+      "customer_name": "Dr. Ananya Roy",
+      "customer_id": "EMP-998822",
+      "insurance_company": "NIVA BUPA HEALTH INSURANCE COMPANY LIMITED",
+      "policy_start_date": "01/10/2024",
+      "policy_end_date": "30/09/2025",
+      "policy_duration": "1 Year",
+      "sum_insured": "15,00,000.00",
+      "total_amount": "26,400.00"
+    },
+    "unanswerable_fields": [
+      "registration_number",
+      "customer_pan"
+    ]
+  },
+  "doc_18_incomplete_fail_closed.pdf": {
+    "file_name": "doc_18_incomplete_fail_closed.pdf",
+    "doc_type": "GENERIC_DOCUMENT",
+    "fields": {
+      "customer_name": "Mr. Sanjay Kothari",
+      "insurance_company": "Star Health and Allied Insurance",
+      "total_amount": "12,000.00"
+    },
+    "unanswerable_fields": [
+      "policy_number",
+      "policy_start_date",
+      "policy_end_date",
+      "registration_number",
+      "pan_number"
+    ]
+  },
+  "doc_19_fleet_table.pdf": {
+    "file_name": "doc_19_fleet_table.pdf",
+    "doc_type": "MOTOR_INSURANCE",
+    "fields": {
+      "policy_number": "IFFCO-FLEET-2024-8844",
+      "customer_name": "Logistics Express Transport Ltd",
+      "insurance_company": "IFFCO TOKIO GENERAL INSURANCE CO. LTD.",
+      "policy_start_date": "01/08/2024",
+      "policy_end_date": "31/07/2025",
+      "policy_duration": "1 Year",
+      "net_premium": "57,700.00",
+      "tax": "10,386.00",
+      "total_amount": "68,086.00"
+    },
+    "unanswerable_fields": [
+      "customer_pan"
+    ]
+  },
+  "doc_20_professional_liability.pdf": {
+    "file_name": "doc_20_professional_liability.pdf",
+    "doc_type": "GENERIC_DOCUMENT",
+    "fields": {
+      "policy_number": "PI-GLOBAL-2024-5500",
+      "customer_name": "Vertex Software Solutions Pvt Ltd",
+      "insurance_company": "TATA AIG",
+      "policy_start_date": "01/11/2024",
+      "policy_end_date": "31/10/2025",
+      "policy_duration": "1 Year",
+      "sum_insured": "5,00,00,000.00",
+      "net_premium": "1,80,000.00",
+      "tax": "32,400.00",
+      "total_amount": "2,12,400.00"
+    },
+    "unanswerable_fields": [
+      "registration_number",
+      "engine_number",
+      "customer_pan"
+    ]
+  }
+}

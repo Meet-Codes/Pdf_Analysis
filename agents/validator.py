@@ -24,21 +24,23 @@ def build_canonical_sections(data: Dict[str, Any], doc_type: DocumentType, subty
             "title": "Customer Details",
             "icon": "👤",
             "fields": [
-                {"label": "Insured Name", "value": clean_display_value(data.get("insured_name"))},
+                {"label": "Insured Name", "value": clean_display_value(data.get("customer_name") or data.get("insured_name"))},
                 {"label": "Address", "value": clean_display_value(data.get("insured_address"))},
-                {"label": "Mobile Number", "value": clean_display_value(data.get("mobile"))},
+                {"label": "Mobile Number", "value": clean_display_value(data.get("customer_mobile") or data.get("mobile"))},
                 {"label": "Email", "value": clean_display_value(data.get("email"))},
             ],
         })
 
-        # Policy Card
+        # Policy & Intermediary Card
         sections.append({
             "title": "Policy Information",
             "icon": "📄",
             "fields": [
                 {"label": "Policy Number", "value": clean_display_value(data.get("policy_number"))},
-                {"label": "Policy Type", "value": clean_display_value(data.get("policy_type"))},
-                {"label": "Insurer", "value": clean_display_value(data.get("insurer"))},
+                {"label": "Insurance Type", "value": clean_display_value(data.get("insurance_type") or data.get("policy_type"))},
+                {"label": "Insurer", "value": clean_display_value(data.get("insurance_company") or data.get("company_name") or data.get("insurer"))},
+                {"label": "Agent Name", "value": clean_display_value(data.get("agent_name"))},
+                {"label": "Agent Code", "value": clean_display_value(data.get("agent_code"))},
                 {"label": "Coverage", "value": clean_display_value(data.get("coverage"))},
             ],
         })
@@ -48,10 +50,12 @@ def build_canonical_sections(data: Dict[str, Any], doc_type: DocumentType, subty
             "title": "Vehicle Specifications",
             "icon": "🚗",
             "fields": [
-                {"label": "Registration Number", "value": clean_display_value(data.get("registration_number"))},
-                {"label": "Make", "value": clean_display_value(data.get("vehicle_make"))},
-                {"label": "Model", "value": clean_display_value(data.get("vehicle_model"))},
-                {"label": "Manufacturing Year", "value": clean_display_value(data.get("manufacturing_year"))},
+                {"label": "Registration Number", "value": clean_display_value(data.get("registration_number") or data.get("vehicle_registration_number"))},
+                {"label": "Class of Vehicle", "value": clean_display_value(data.get("class_of_vehicle") or data.get("vehicle_type"))},
+                {"label": "Make", "value": clean_display_value(data.get("vehicle_make") or data.get("make"))},
+                {"label": "Model", "value": clean_display_value(data.get("vehicle_model") or data.get("model"))},
+                {"label": "Manufacturing Year", "value": clean_display_value(data.get("year_of_manufacture") or data.get("manufacturing_year"))},
+                {"label": "Seating Capacity", "value": clean_display_value(data.get("seating_capacity"))},
                 {"label": "Engine Number", "value": clean_display_value(data.get("engine_number"))},
                 {"label": "Chassis Number", "value": clean_display_value(data.get("chassis_number"))},
                 {"label": "RTO", "value": clean_display_value(data.get("rto"))},
@@ -63,9 +67,14 @@ def build_canonical_sections(data: Dict[str, Any], doc_type: DocumentType, subty
             "title": "Premium & Tax Breakdown",
             "icon": "💰",
             "fields": [
-                {"label": "Own Damage Premium", "value": format_currency_inr(data.get("own_damage_premium"))},
-                {"label": "Third Party Premium", "value": format_currency_inr(data.get("third_party_premium"))},
-                {"label": "GST", "value": format_currency_inr(data.get("gst"))},
+                {"label": "Vehicle IDV", "value": format_currency_inr(data.get("idv") or data.get("total_idv"))},
+                {"label": "CNG/LPG IDV", "value": format_currency_inr(data.get("cng_idv"))},
+                {"label": "Own Damage Premium", "value": format_currency_inr(data.get("basic_od_premium") or data.get("own_damage_premium") or data.get("od_premium"))},
+                {"label": "Third Party Premium", "value": format_currency_inr(data.get("basic_tp_premium") or data.get("third_party_premium") or data.get("tp_premium"))},
+                {"label": "Net Premium", "value": format_currency_inr(data.get("net_premium"))},
+                {"label": "Add-on Premium", "value": format_currency_inr(data.get("addon_premium"))},
+                {"label": "GST Amount", "value": format_currency_inr(data.get("tax") or data.get("gst") or data.get("gst_amount"))},
+                {"label": "NCB", "value": clean_display_value(data.get("ncb") or data.get("ncb_percentage"))},
                 {"label": "Total Premium", "value": format_currency_inr(data.get("total_premium")), "is_highlight": True},
             ],
         })
@@ -75,6 +84,7 @@ def build_canonical_sections(data: Dict[str, Any], doc_type: DocumentType, subty
             "title": "Important Dates",
             "icon": "📅",
             "fields": [
+                {"label": "Booking Date", "value": clean_display_value(data.get("policy_booking_date"))},
                 {"label": "Policy Start Date", "value": clean_display_value(data.get("policy_start_date"))},
                 {"label": "Policy End Date", "value": clean_display_value(data.get("policy_end_date"))},
                 {"label": "Renewal Due Date", "value": clean_display_value(data.get("policy_end_date"))},
@@ -168,6 +178,91 @@ def build_canonical_sections(data: Dict[str, Any], doc_type: DocumentType, subty
                 {"label": "Base Premium", "value": format_currency_inr(data.get("premium"))},
                 {"label": "GST", "value": format_currency_inr(data.get("gst"))},
                 {"label": "Net Premium", "value": format_currency_inr(data.get("net_premium") or data.get("premium")), "is_highlight": True},
+            ],
+        })
+
+        sections.append({
+            "title": "Policy Period",
+            "icon": "📅",
+            "fields": [
+                {"label": "Policy Start Date", "value": clean_display_value(data.get("policy_start_date"))},
+                {"label": "Policy End Date", "value": clean_display_value(data.get("policy_end_date"))},
+            ],
+        })
+
+    elif doc_type == DocumentType.PROPERTY_INSURANCE:
+        sections.append({
+            "title": "Insured Business Details",
+            "icon": "🏢",
+            "fields": [
+                {"label": "Insured Business", "value": clean_display_value(data.get("insured_business") or data.get("customer_name"))},
+                {"label": "Policy Number", "value": clean_display_value(data.get("policy_number"))},
+                {"label": "Insurer", "value": clean_display_value(data.get("insurer"))},
+                {"label": "Business / Occupancy", "value": clean_display_value(data.get("business_type") or data.get("occupancy"))},
+                {"label": "Risk Address", "value": clean_display_value(data.get("address"))},
+            ],
+        })
+
+        sections.append({
+            "title": "Sum Insured & Coverage",
+            "icon": "🛡️",
+            "fields": [
+                {"label": "Total Sum Insured", "value": format_currency_inr(data.get("total_sum_insured") or data.get("sum_insured")), "is_highlight": True},
+                {"label": "Earthquake Cover", "value": clean_display_value(data.get("earthquake_cover"))},
+                {"label": "Terrorism Cover", "value": clean_display_value(data.get("terrorism_cover"))},
+            ],
+        })
+
+        sections.append({
+            "title": "Financial Details",
+            "icon": "💰",
+            "fields": [
+                {"label": "Base Premium", "value": format_currency_inr(data.get("base_premium") or data.get("premium"))},
+                {"label": "Terrorism Premium", "value": format_currency_inr(data.get("terrorism_premium"))},
+                {"label": "GST", "value": format_currency_inr(data.get("gst_amount") or data.get("gst") or data.get("tax"))},
+                {"label": "Total Premium", "value": format_currency_inr(data.get("total_premium")), "is_highlight": True},
+            ],
+        })
+
+        sections.append({
+            "title": "Policy Period",
+            "icon": "📅",
+            "fields": [
+                {"label": "Policy Start Date", "value": clean_display_value(data.get("policy_start_date"))},
+                {"label": "Policy End Date", "value": clean_display_value(data.get("policy_end_date"))},
+            ],
+        })
+
+    elif doc_type == DocumentType.WORKMEN_COMPENSATION:
+        sections.append({
+            "title": "Employer & Policy Details",
+            "icon": "👷",
+            "fields": [
+                {"label": "Employer Name", "value": clean_display_value(data.get("employer") or data.get("customer_name"))},
+                {"label": "Policy Number", "value": clean_display_value(data.get("policy_number"))},
+                {"label": "Insurer", "value": clean_display_value(data.get("insurer"))},
+                {"label": "Business Activity", "value": clean_display_value(data.get("business_activity") or data.get("nature_of_work"))},
+            ],
+        })
+
+        sections.append({
+            "title": "Coverage & Workforce",
+            "icon": "👥",
+            "fields": [
+                {"label": "Number of Employees", "value": clean_display_value(data.get("number_of_employees"))},
+                {"label": "Sum Insured / Total Wages", "value": format_currency_inr(data.get("sum_insured")), "is_highlight": True},
+                {"label": "Employment Location", "value": clean_display_value(data.get("employment_location") or data.get("address"))},
+                {"label": "Occupational Disease Cover", "value": clean_display_value(data.get("occupational_disease_cover"))},
+            ],
+        })
+
+        sections.append({
+            "title": "Financial Details",
+            "icon": "💰",
+            "fields": [
+                {"label": "Base Premium", "value": format_currency_inr(data.get("premium"))},
+                {"label": "GST", "value": format_currency_inr(data.get("gst") or data.get("tax"))},
+                {"label": "Total Premium", "value": format_currency_inr(data.get("total_premium")), "is_highlight": True},
             ],
         })
 

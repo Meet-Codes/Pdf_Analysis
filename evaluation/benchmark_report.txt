@@ -1,0 +1,87 @@
+
+============================================================
+SECTION 42: MAXIMUM-ACCURACY CANONICAL BENCHMARK EVALUATION
+============================================================
+
+## CURRENT SYSTEM ACCURACY (DIRECT CANONICAL STRUCTURED DATA)
+
+Policy Number Exact Match:
+100.0% (19/19)
+
+Customer Name Exact Match:
+80.0% (16/20)
+
+Policy Dates & Duration Exact Match:
+60.0% (33/55)
+
+Amounts Exact Match:
+65.0% (13/20)
+
+Insurance Company Exact Match:
+75.0% (15/20)
+
+Other Fields Exact Match:
+54.8% (17/31)
+
+Retrieval Recall@K:
+100.0% (MRR: 1.0)
+
+Hallucination Rate:
+0.0% (0.0% Hallucinations on Unanswerable Inquiries)
+
+Not-Found Precision (Fail-Closed):
+100.0%
+
+============================================================
+REAL-WORLD FAILURE CASES VALIDATION (CASES A, B, C)
+============================================================
+
+### Case A (HDFC ERGO / TVS JUPITER-ZX): 100.0% (11/11 fields)
+  [PASS] customer_name: expected='Ramani Bhavin Chunilal', actual='Ramani Bhavin Chunilal'
+  [PASS] insurance_company: expected='HDFC ERGO General Insurance Company Limited', actual='HDFC ERGO General Insurance Company Limited'
+  [PASS] policy_number: expected='2312101324826900000', actual='2312101324826900000'
+  [PASS] policy_start_date: expected='10/01/2023', actual='10 January 2023'
+  [PASS] policy_end_date: expected='09/01/2024', actual='9 January 2024'
+  [PASS] policy_duration: expected='1 Year', actual='1 Year'
+  [PASS] vehicle_make: expected='TVS', actual='TVS'
+  [PASS] vehicle_model: expected='JUPITER-ZX', actual='JUPITER-ZX'
+  [PASS] engine_number: expected='EG5KL1001283', actual='EG5KL1001283'
+  [PASS] chassis_number: expected='MD626CG54L1K48477', actual='MD626CG54L1K48477'
+  [PASS] total_amount: expected='1942.00', actual='1942.0'
+
+### Case B (Go Digit / Narotambhai Pambhar / HONDA ACTIVA/STD): 100.0% (11/11 fields)
+  [PASS] customer_name: expected='Narotambhai Pambhar', actual='Narotambhai Pambhar'
+  [PASS] insurance_company: expected='Go Digit General Insurance Ltd.', actual='Go Digit General Insurance Ltd.'
+  [PASS] policy_number: expected='D091386640/20012023', actual='D091386640/20012023'
+  [PASS] policy_start_date: expected='21/01/2023', actual='21 January 2023'
+  [PASS] policy_end_date: expected='20/01/2024', actual='20 January 2024'
+  [PASS] policy_duration: expected='1 Year', actual='1 Year'
+  [PASS] registration_number: expected='GJ03HF4274', actual='GJ03HF4274'
+  [PASS] vehicle_make: expected='HONDA', actual='HONDA'
+  [PASS] vehicle_model: expected='ACTIVA/STD', actual='ACTIVA/STD'
+  [PASS] engine_number: expected='JF50ET1474312', actual='JF50ET1474312'
+  [PASS] chassis_number: expected='ME4JF502KET476631', actual='ME4JF502KET476631'
+
+### Case C (IFFCO-TOKIO / Bharatbhai M Harsoda / 1-12IXB8DM P400): 100.0% (12/12 fields)
+  [PASS] customer_name: expected='Bharatbhai M Harsoda', actual='Bharatbhai M Harsoda'
+  [PASS] insurance_company: expected='IFFCO-TOKIO GENERAL INSURANCE CO. LTD.', actual='IFFCO-TOKIO GENERAL INSURANCE CO. LTD.'
+  [PASS] policy_number: expected='1-12IXB8DM P400', actual='1-12IXB8DM P400'
+  [PASS] policy_start_date: expected='16/03/2019', actual='16 March 2019'
+  [PASS] policy_end_date: expected='15/03/2020', actual='15 March 2020'
+  [PASS] policy_duration: expected='1 Year', actual='1 Year'
+  [PASS] registration_number: expected='GJ03ER8895', actual='GJ03ER8895'
+  [PASS] vehicle_make: expected='MARUTI', actual='MARUTI'
+  [PASS] vehicle_model: expected='ALTO 800 LXI', actual='ALTO 800 LXI'
+  [PASS] engine_number: expected='F8DN4896331', actual='F8DN4896331'
+  [PASS] chassis_number: expected='MA3EUA61S00108143', actual='MA3EUA61S00108143'
+  [PASS] total_amount: expected='7796.26', actual='7796.26'
+
+------------------------------------------------------------
+ARCHITECTURE SUMMARY & RESOLUTION HIGHLIGHTS:
+- Single authoritative canonical schema enforced by CandidateResolver.
+- Competing extraction paths ranked by strict priority tiers (Tier 4 > 3 > 2 > 1).
+- Non-serializable objects (_evidence_candidates) completely prevented from escaping.
+- Dates strictly anchored to explicit semantic labels; zero unanchored fallbacks.
+- Vehicle make/model clean separation with spatial alignment & negative rejection.
+- Customer name verified via structural header and negative filtering (no boilerplate/brokers).
+============================================================

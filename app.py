@@ -89,6 +89,11 @@ def render_sidebar():
     return nav_mode
 
 
+import hashlib
+
+PIPELINE_VERSION = "2.1.0"
+
+
 def handle_file_processing(uploaded_files: List[Any]):
     """Processes uploaded files through the complete intelligence pipeline."""
     if not uploaded_files:
@@ -98,13 +103,14 @@ def handle_file_processing(uploaded_files: List[Any]):
         fname = uploaded_file.name
         file_bytes = uploaded_file.read()
 
-        # Check if already processed
-        existing = [d for d in st.session_state["documents"].values() if d.file_name == fname]
-        if existing:
-            st.session_state["active_doc_id"] = existing[0].document_id
+        # Cache key based on SHA-256(file_bytes) + pipeline_version
+        file_hash = hashlib.sha256(file_bytes).hexdigest()[:16]
+        doc_id = f"{file_hash}_{PIPELINE_VERSION}"
+
+        if doc_id in st.session_state["documents"]:
+            st.session_state["active_doc_id"] = doc_id
             continue
 
-        doc_id = generate_document_id(fname)
         with st.status(f"Processing {fname}...", expanded=True) as status:
             st.write("Verifying document security and permissions...")
             temp_path = save_uploaded_file(file_bytes, fname)

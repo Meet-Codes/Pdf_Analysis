@@ -17,7 +17,7 @@ def generate_document_summary(data: Dict[str, Any], doc_type: DocumentType, subt
 
     if doc_type == DocumentType.MOTOR_INSURANCE:
         title = f"{subtype or 'Motor'} Insurance Policy".title()
-        customer = clean_display_value(data.get("insured_name"))
+        customer = clean_display_value(data.get("customer_name") or data.get("insured_name"))
         policy = clean_display_value(data.get("policy_number"))
         veh_parts = [p for p in [data.get("vehicle_make"), data.get("vehicle_model")] if p]
         vehicle = " ".join(veh_parts) if veh_parts else "Not available in the document"

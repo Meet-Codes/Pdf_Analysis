@@ -115,6 +115,28 @@ def route_and_extract(
             page_texts[pno] = native_dict.get(pno, {}).get("text", "")
             page_sources[pno] = "native"
 
+            # Always extract structured tables if present or likely
+            if page_res.likely_table or ptype == PageType.FORM:
+                tabs = extract_tables_from_page(file_path, pno)
+                for t in tabs:
+                    t["page_number"] = pno
+                all_tables.extend(tabs)
+
+    from ingestion.document_layout import DocumentLayoutModel
+
+    doc_id = getattr(inspection, "document_id", file_path.stem)
+    layout = DocumentLayoutModel(document_id=doc_id)
+    layout.add_tables(all_tables)
+
+    # Populate layout model with page elements if available
+    for pno in inspection.pages:
+        p_num = pno.page_number
+        native_data = extract_native_text(file_path, [p_num]).get(p_num, {})
+        tokens = native_data.get("tokens", [])
+        lines = native_data.get("lines", [])
+        blocks = native_data.get("blocks", [])
+        layout.add_page_elements(page=p_num, tokens=tokens, lines=lines, blocks=blocks)
+
     # Assemble full document text in natural reading order
     ordered_pages = sorted(page_texts.keys())
     full_text_parts = []
@@ -133,4 +155,5 @@ def route_and_extract(
         "form_fields": form_fields,
         "ocr_invoked_pages": ocr_invoked_pages,
         "extraction_errors": extraction_errors,
+        "layout": layout,
     }

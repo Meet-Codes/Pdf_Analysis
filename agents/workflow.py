@@ -99,11 +99,16 @@ def node_extract_structured(state: DocumentState) -> Dict[str, Any]:
     form_fields = state["extracted_content"].get("form_fields", {})
     doc_type = state["document_type"]
 
+    page_texts = state["extracted_content"].get("page_texts", {})
+    layout = state["extracted_content"].get("layout", None)
+
     raw_extracted = extract_structured_fields(
         text=full_text,
         doc_type=doc_type,
         tables=tables,
         form_fields=form_fields,
+        page_texts=page_texts,
+        layout=layout,
     )
     return {
         "raw_extraction": raw_extracted,
@@ -170,11 +175,13 @@ def node_build_canonical(state: DocumentState) -> Dict[str, Any]:
         validation_errors=state["validation_errors"],
         inspection=state["inspection"],
         page_texts=state["extracted_content"].get("page_texts", {}),
+        tables=state["extracted_content"].get("tables", []),
     )
 
-    # Index into RAG vector store
+    # Index into RAG vector store & BM25 with tables as first-class retrieval chunks
     page_texts = state["extracted_content"].get("page_texts", {})
-    index_canonical_document(canonical, page_texts)
+    tables = state["extracted_content"].get("tables", [])
+    index_canonical_document(canonical, page_texts, tables=tables)
 
     return {
         "canonical_document": canonical,
